@@ -1,0 +1,133 @@
+<!-- templates/site_info.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/welcome-styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}">
+
+    <script>
+      function copyEmail(emailElement) {
+        var emailText = emailElement.innerText;
+        navigator.clipboard.writeText(emailText)
+          .then(function() {
+            console.log('Email copied successfully');
+            // Show the popup
+            var popup = document.getElementById('popup');
+            popup.style.display = 'block';
+            // Hide the popup after 2 seconds
+            setTimeout(function() {
+              popup.style.display = 'none';
+            }, 2000);
+          })
+          .catch(function(err) {
+            console.error('Error copying email: ', err);
+            alert('Failed to copy email');
+          });
+      }
+    </script>
+</head>
+
+<body>
+<div class="about-section">
+  <h1>Lost and Found</h1>
+  <p>This site is a University-centered Lost and Found app. </p>
+  <p>We created this site during the Spring of 2024 in CS 3240 at the University of Virginia.</p>
+</div>
+
+<div class="why">
+  <h2>Why a Lost and Found Site</h2>
+  <p>Currently, there exists no mainstream, organized way of reporting lost or found items at the University. 
+      Students use a variety of means to report their items such as a GroupMe thread, or class Snapchat stories. 
+      The GroupMe, though, contains a limited number of students, and you must be manually added to the group to submit an item as lost or found.
+      The Snapchat story is effective in getting your report to see a large number of people, but reports disappear after 24 hours.</p>
+  <p>We saw an issue with this, and came up with a solution. </p>
+</div>
+
+<div class="about">
+  <h3>About Lost and Found</h3>
+  <p>Our site facilitates anonymous users and users with an account, or common users. 
+    Anonymous users can submit a report of a found item, and common users can submit a report for lost or found items.
+    Since reporting a lost item will require a follow-up from admin, we restrict lost item reports to only users with accounts.
+  </p>
+  <p>Once a report is submitted, a common user can view their own post history, or view a feed of lost or found items.
+      Site administrators can view reports and resolve them with the option to submit text explanation for the resolution.
+      This resolution will be visible for common users, and can help them locate their lost items, or let them know that a found item has been retrieved by its owner. 
+  </p>
+  <p>There is also an option for common users to mark a post they see as "flagged." 
+      A post should be flagged if it is a duplicate post, or contains sensitive information or illegal contents.
+      Once a post has been marked as flagged, admin will review the post and resolve as necessary.
+  </p>
+  <p>The intention of this app is to provide a safe, effective way of returning lost items to their owner. 
+      Since this is a class project, please do not submit any real information. 
+  </p>
+</div>
+
+  
+<h2 style="text-align:center">Our Team</h2>
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <img src="https://lostandfound-bkt-0.s3.amazonaws.com/developer-images/Brennen.jpg" alt="Brennen" style="width:100%">
+      <div class="container">
+        <h2>Brennen Muller</h2>
+        <p class="title">Scrum Master</p>
+        <p class="email" onclick="copyEmail(this)">sem9bd@virginia.edu</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="https://lostandfound-bkt-0.s3.amazonaws.com/developer-images/Kevin.jpg" alt="Kevin" style="width:100%">
+      <div class="container">
+        <h2>Kevin Lam</h2>
+        <p class="title">DevOps Manager</p>
+        <p class="email" onclick="copyEmail(this)">mvk2uy@virginia.edu</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="https://lostandfound-bkt-0.s3.amazonaws.com/developer-images/Brian.jpg" alt="Brian" style="width:100%">
+      <div class="container">
+        <h2>Brian Tafazoli</h2>
+        <p class="title">Testing Manager</p>
+        <p class="email" onclick="copyEmail(this)">vve6js@virginia.edu</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <img src="https://lostandfound-bkt-0.s3.amazonaws.com/developer-images/Eli.jpg" alt="Eli" style="width:100%">
+      <div class="container">
+        <h2>Eli Hiscott</h2>
+        <p class="title">Requirements Manager</p>
+        <p class="email" onclick="copyEmail(this)">ydt5vy@virginia.edu</p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="https://lostandfound-bkt-0.s3.amazonaws.com/developer-images/lindsay.jpg" alt="Lindsay" style="width:100%">
+      <div class="container">
+        <h2>Lindsay Lian</h2>
+        <p class="title">Software Architect</p>
+        <p class="email" onclick="copyEmail(this)">eeq5dn@virginia.edu</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="popup" class="popup">Email copied</div>
+
+</body>
+  {% endblock %}

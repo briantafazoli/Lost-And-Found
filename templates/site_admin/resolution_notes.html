@@ -1,0 +1,20 @@
+<!-- In your templates/site_admin/resolution_notes.html -->
+
+{% extends "base.html" %}
+{% block content %}
+  <form action="{% url "site_admin:update" item.id %}" method="post">{% csrf_token %}
+    <div>
+      <p>Item to be marked as resolved:</p>
+      <ul>
+        {{item}}
+      </ul>
+      <p>If you do not wish to provide an explanation, leave the text field blank and press submit.</p>
+    </div>
+    <div class="container p-3">
+      <label for id="resolve_text"></label>
+      <textarea name = "resolve_text" cols="40" rows="10" maxlength="500"></textarea>
+  </div>
+    <input type="hidden" name="apply" value="1">
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}

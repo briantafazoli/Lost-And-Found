@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="https://{{ s3_url }}/css/lost_feed_styles.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+        {% block title %}
+            <div class="container p-3">
+                <h1>
+                    {% if is_found %}
+                        Found
+                    {% else %}
+                        Lost
+                    {% endif %}
+                    Items
+                </h1>
+            </div>
+        {% endblock %}
+    </head>
+
+
+    <body>
+
+    {% if user.is_authenticated %}
+        <div class="container p-3">
+            {% if items %}
+                {% for item in items %}
+                    <div class="lost-item-component" id="{{ item.id }}">
+                        <div class="item_name">
+                            {{ item.item_name }}
+                        </div>
+                        <div class="status">
+                            {{ item.get_status_display }}
+                        </div>
+                        <div class="dateFound">
+                            {{ item.date_found }}
+                        </div>
+                        {% if item.files %}
+                            <div class="itemPicture">
+                                {% for file in item.files %}
+                                    {% if file.type == 'pdf' %}
+                                        <embed src="{{ file.file.url }}" type="application/pdf" width="100%"
+                                               height="600px">
+                                    {% elif file.type == 'txt' %}
+                                        <embed src="{{ file.file.url }}" type="text/plain" width="100%" height="400px">
+                                    {% elif file.type == 'png' or file.type == 'jpeg' %}
+                                        <img src="{{ file.file.url }}" class="img-fluid">
+                                    {% else %}
+                                        Could not display file.
+                                        <br>
+                                        <a href="{{ file.file.url }}">
+                                            <button class="btn btn-black">Download</button>
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <a href="{% url 'items:details' item.id %}">View more details</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% block empty_message %}
+                    <p> No items lost! </p>
+                {% endblock %}
+            {% endif %}
+        </div>
+    {% else %}
+        <p> As an anonymous user, you do not have access to this page.
+            Please log in to view posts. </p>
+    {% endif %}
+
+    </body>
+
+{% endblock %}

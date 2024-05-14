@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+</head>
+{% if user.is_site_admin %}
+    <div class="container p-3">
+    <font size="+2"> <b> <i> Review Reports </i></b></font>
+    </div>
+
+    <div class="container p-3">
+    {% if items %}
+        <ul>
+            {% for item in items %}
+                <li><a href="/site_admin/review/{{ item.id }}">{{item.item_name}}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p> No items to review! </p>
+    {% endif %}
+    </div>
+
+{% else%}
+    <p> You do not have access to this page. </p>
+{%endif%}
+{% endblock%}
+</html>

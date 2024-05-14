@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+{% extends "items/index.html" %}
+<link rel="stylesheet" type="text/css" href="https://{{ s3_url }}/css/index.css">
+
+{% block title %}
+    <div class="container p-3">
+        <h1> User History </h1>
+    </div>
+{% endblock %}
+
+{% block empty_message %}
+    <p> No reports made. </p>
+{% endblock %}

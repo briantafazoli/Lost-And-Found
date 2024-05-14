@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+</head>
+
+{% if user.is_site_admin %}
+    <body>
+
+    <div class="container p-3">
+        <font size="+2"> <b> <i> {{ item }} </i></b> </font>
+    </div>
+
+    {% if item.description %}
+    <div class="container p-3">
+        <p> <b> Description: </b>
+        {{ item.description }} </p>
+    </div>
+    {% endif %}
+
+    {% if item.location %}
+    <div class="container p-3">
+        <p> <b> Location: </b>
+        {{ item.get_location_display }} </p>
+    </div>
+    {% endif %}
+
+    {% if item.date_found %}
+    <div class="container p-3">
+        <p> <b> Date Found: </b>
+        {{ item.date_found }} </p>
+    </div>
+    {% endif %}
+
+    {% if item.expiration_date %}
+        <div class="container p-3">
+            <p> <b> Expiration Date: </b>
+            {{ item.expiration_date }} </p>
+        </div>
+    {% endif %}
+    
+    {% if item.files %}
+        <div class="container p-3">
+            <p><b> Picture: </b></p>
+            {% for file in item.files %}
+                <div style="margin: 10px 0">
+                    {% if file.type == 'pdf' %}
+                        <embed src="{{ file.file.url }}" type="application/pdf" width="100%"
+                               height="600px">
+                    {% elif file.type == 'txt' %}
+                        <embed src="{{ file.file.url }}" type="text/plain" width="100%" height="400px">
+                    {% elif file.type == 'png' or file.type == 'jpeg' %}
+                        <img src="{{ file.file.url }}" class="img-fluid">
+                    {% else %}    
+                        <p>Could not display file.</p>
+                        <a href="{{ file.file.url }}">
+                            <button class="btn btn-black">Download</button>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if item.tag %}
+    <div class="container p-3">
+        <p> <b> Tag: </b>
+        {{ item.get_tag_display }} </p>
+    </div>
+    {% endif %}
+
+
+    <div class = "container p-3">
+        <p> <b> {{item.get_status_display}} </b> </p>
+    </div>
+
+    <div class="container p-3">
+        <a href="{% url "site_admin:resolve" item.id %}">
+            <button class="btn btn-black">Mark as resolved</button>
+        </a>
+    </div>
+
+
+    </body>
+
+{% else%}
+    <p> You do not have access to this page. </p>
+{%endif%}
+
+{% endblock %}
+</html>
